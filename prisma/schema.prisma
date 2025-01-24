@@ -13,11 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// prisma user basic model
+// model User {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   username    String   
+//   email  String
+//   password  String
+//   createdAt DateTime @default(now())
+// }
+
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  username    String   
-  email  String
+  id       String  @id @default(cuid()) @map("_id")
+  email    String  @unique
+  username String
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Order {
@@ -36,28 +46,4 @@ model Order {
   packages            Json 
 }
 
-// model Order {
-//   id                  String    @id @default(auto()) @map("_id") @db.ObjectId
-//   collectionAddress   String
-//   date                DateTime
-//   firstName           String
-//   lastName            String
-//   email               String
-//   phone               String
-//   recipientAddress    String
-//   department          String
-//   municipality        String
-//   referencePoint      String
-//   instructions        String
-//   packages            Package[] @relation("OrderToPackages")
-// }
 
-// model Package {
-//   id       String  @id @default(auto()) @map("_id") @db.ObjectId
-//   length   Float
-//   height   Float
-//   width    Float
-//   content  String
-//   orderId  String  @db.ObjectId
-//   order    Order   @relation("OrderToPackages", fields: [orderId], references: [id])
-// }
